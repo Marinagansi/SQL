@@ -1,0 +1,33 @@
+-- https://github.com/santoshmungle/complex-sql-queries/blob/master/SQL%20Queries%20Part1.sql
+
+/************************************************************************************************
+Title:			SQL Queries Part1
+Created by: Santosh Mungle  <santoshmungle@gmail.com>
+License:		CC BY 3.0
+
+Usage:
+These queries meant to give you an understanding of sql queries for analyzing data in database.
+In this part, there are following 3 tables in the database:
+ 1) Table: trades
+    columns: trade_id (pk), client_id, trade_datetime, facevalue, revenue
+ 2) Table: salesreps
+    columns: salesrep_id (pk), first_name, last_name
+ 3) Table: clients
+    columns: client_id (pk), name, assigned_salesrep_id, signup_datetime,   churn_datetime 
+************************************************************************************************/
+
+
+Query 1. How many trades were there in the month of September 2015?
+Solution: 
+SELECT COUNT(*) FROM trades
+where year(trade_datetime)=2015 and month(trade_datetime)=9
+
+
+Query 2. A client is signed up if he has a signup date and churned if there is a churn date. 
+         What % of signed up accounts have churned?
+Solution: 
+SELECT 
+    (COUNT(CASE WHEN churn_date IS NOT NULL THEN 1 END) * 100.0) / 
+    COUNT(CASE WHEN signup_date IS NOT NULL THEN 1 END) AS churn_percentage
+FROM 
+    accounts;
